@@ -1,28 +1,38 @@
 import React, {useState} from 'react'
 import { Menu } from 'antd';
 import { 
-    MailOutlined, 
     AppstoreOutlined, 
-    SettingOutlined } from '@ant-design/icons';
+    SettingOutlined,
+    UserOutlined,
+    UserAddOutlined,
+} from '@ant-design/icons';
+import {Link} from 'react-router-dom'
 
-const { SubMenu } = Menu;
+const { SubMenu, Item } = Menu;
 
 const Header = () => {
-    const [state, setState] = useState('')
+    const [current, setCurrent] = useState('home')
 
-    const handleClick = () => {}
+    const handleClick = (e) => {
+        setCurrent(e.key)
+    }
 
     return (
-        <Menu mode="horizontal">
-            <Menu.Item key="mail" icon={<MailOutlined />}>
-                Home
-            </Menu.Item>
+        <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+            <Item key="home" icon={<AppstoreOutlined />}>
+                <Link to='/'>Home</Link>
+            </Item>
+            
+            <Item key="register" icon={<UserAddOutlined />} className='float-right'>
+                <Link to='/register'>Register</Link>
+            </Item>
+            <Item key="login" icon={<UserOutlined />} className='float-right'>
+                <Link to='/login'>Login</Link>
+            </Item>
            
-            <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Register">
-                <Menu.ItemGroup title="Item 1">
-                    <Menu.Item key="setting:1">Login</Menu.Item>
-                    <Menu.Item key="setting:2">Register</Menu.Item>
-                </Menu.ItemGroup>
+            <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
+                <Item key="sub1">Login</Item>
+                <Item key="sub2">Register</Item>
             </SubMenu>
         </Menu>
     );
