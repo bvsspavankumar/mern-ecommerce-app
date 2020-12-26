@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import Login from './pages/auth/Login'
 import Logout from './pages/auth/Logout'
+import ForgotPassword from './pages/auth/ForgotPassword'
 import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
@@ -40,6 +41,7 @@ const App = () => {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/logout" component={Logout} />
+      <Route path="/forgot/password" component={ForgotPassword} />
       <Route path="/register/complete" component={RegisterComplete} />
       <Route path="/register" component={Register} />
       <Route path="/" component={Home} />
