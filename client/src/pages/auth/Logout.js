@@ -18,7 +18,6 @@ const Logout = () => {
             toast.error('Not Logged in')
             return
         }
-        console.log(`cur:${firebase.auth().currentUser}`)
         auth.signOut()
         dispatch({
             type: "LOGOUT",
