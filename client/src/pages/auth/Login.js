@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {auth} from '../../firebase'
+import {auth, googleAuthProvider} from '../../firebase'
 import {toast} from 'react-toastify'
 import {Button} from 'antd'
-import {MailOutlined} from '@ant-design/icons';
+import {GoogleOutlined, MailOutlined} from '@ant-design/icons';
 import {useDispatch} from 'react-redux'
 
 const Login = ({history}) => {
@@ -12,21 +12,23 @@ const Login = ({history}) => {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
 
+    const loginHandler = (user) => {
+        toast.success(`Login successful`)
+        dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+                email: user.email,
+                token: user.getIdTokenResult().token
+            }
+        })
+        history.push('/')
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
         auth.signInWithEmailAndPassword(email, password)
-            .then(({user})=>{
-                toast.success(`Login successful`)
-                dispatch({
-                    type: "LOGGED_IN_USER",
-                    payload: {
-                        email: user.email,
-                        token: user.getIdTokenResult().token
-                    }
-                })
-                history.push('/')
-            })
+            .then(({user})=>loginHandler(user))
             .catch(err=>{
                 toast.error(`Error: ${err.message}`)
                 setLoading(false)
@@ -34,6 +36,14 @@ const Login = ({history}) => {
         
         // setEmail("")
         // setPassword("")
+    }
+    const googleLogin = () => {
+        auth.signInWithPopup(googleAuthProvider)
+            .then(({user})=>loginHandler(user))
+            .catch(err=>{
+                toast.error(`Error: ${err.message}`)
+                setLoading(false)
+            })
     }
 
     const loginForm = (
@@ -66,6 +76,16 @@ const Login = ({history}) => {
                 onClick={handleSubmit}
                 disabled={!(email && password && password.length>=6)}
             >Login</Button>
+            <br />
+            <Button 
+                type='danger' 
+                className='mb-3'
+                block
+                shape='round'
+                icon={<GoogleOutlined />}
+                onClick={googleLogin}
+                size='large'
+            >Login with Google</Button>
         </form>
     )
 
