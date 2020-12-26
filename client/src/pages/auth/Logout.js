@@ -1,6 +1,4 @@
 import React from 'react'
-
-import firebase from 'firebase'
 import {useDispatch} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'

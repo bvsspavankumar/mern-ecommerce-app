@@ -27,7 +27,7 @@ const RegisterComplete = ({history}) => {
                     window.localStorage.removeItem('emailForRegistration')
                     let user = auth.currentUser
                     await user.updatePassword(password)
-                    const idTokenResult = await user.getIdTokenResult()
+                    await user.getIdTokenResult()
                     history.push('/')
                     toast.success('Registration successful')
                 } else {
