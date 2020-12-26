@@ -7,11 +7,13 @@ import {
     UserAddOutlined,
 } from '@ant-design/icons';
 import {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
 const { SubMenu, Item } = Menu;
 
 const Header = () => {
     const [current, setCurrent] = useState('home')
+    const {user} = useSelector(state=>({...state}))
 
     const handleClick = (e) => {
         setCurrent(e.key)
@@ -23,20 +25,21 @@ const Header = () => {
                 <Link to='/'>Home</Link>
             </Item>
             
+            {!user && (<>
             <Item key="register" icon={<UserAddOutlined />} className='float-right'>
                 <Link to='/register'>Register</Link>
             </Item>
             <Item key="login" icon={<UserOutlined />} className='float-right'>
                 <Link to='/login'>Login</Link>
-            </Item>
+            </Item></>)}
            
-            <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
-                <Item key="sub1">Login</Item>
-                <Item key="sub2">Register</Item>
+            {user &&
+            <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email.split('@')[0]} className='float-right'>
+                <Item key="sub1">Option</Item>
                 <Item key='logout' icon={<UserOutlined />}>
                     <Link to='/logout'>Logout</Link>
                 </Item>
-            </SubMenu>
+            </SubMenu>}
         </Menu>
     );
 }
