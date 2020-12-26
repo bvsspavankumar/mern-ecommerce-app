@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.6.0",
     "ant": "^0.2.0",
     "antd": "^4.9.4",
+    "axios": "^0.21.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-firebase": "^2.2.8",

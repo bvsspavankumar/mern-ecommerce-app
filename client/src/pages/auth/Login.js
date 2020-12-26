@@ -5,6 +5,16 @@ import {Button} from 'antd'
 import {GoogleOutlined, MailOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
+import axios from 'axios'
+
+const createOrUpdateUser = async (authtoken) => {
+    console.log('in couu')
+    return await axios.post(
+        process.env.REACT_APP_API+'/create-or-update-user/',
+        {},
+        {headers:{authtoken}}
+    )
+}
 
 const Login = ({history}) => {
 
@@ -34,15 +44,17 @@ const Login = ({history}) => {
         e.preventDefault()
         setLoading(true)
         auth.signInWithEmailAndPassword(email, password)
-            .then(({user})=>loginHandler(user))
+            .then(({user})=>{
+                loginHandler(user)
+                return user.getIdTokenResult()
+            })
+            .then(token=>createOrUpdateUser(token.token))
             .catch(err=>{
                 toast.error(`Error: ${err.message}`)
                 setLoading(false)
             })
-        
-        // setEmail("")
-        // setPassword("")
     }
+
     const googleLogin = () => {
         auth.signInWithPopup(googleAuthProvider)
             .then(({user})=>loginHandler(user))
