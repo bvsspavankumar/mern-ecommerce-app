@@ -20,6 +20,13 @@ const Login = ({history}) => {
         if (user && user.token) history.push('/')
     }, [user])
 
+    const roleBasedRedirect = (res) => {
+        if (res.data.role === "admin")
+            history.push("/admin/dashboard")
+        else
+            history.push("/user/history")
+    }
+
     const loginHandler = (user) => {
         toast.success(`Login successful`)
         user.getIdTokenResult()
@@ -36,9 +43,10 @@ const Login = ({history}) => {
                         _id: res.data._id,
                     }
                 })
+                roleBasedRedirect(res)
             })
             
-        history.push('/')
+        // history.push('/')
     }
 
     const handleSubmit = async (e) => {
