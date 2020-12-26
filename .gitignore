@@ -1,3 +1,5 @@
 /node_modules/
 client/.eslintcache
 */.env
+server/node_modules
+server/.env
