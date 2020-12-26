@@ -37,18 +37,16 @@ const Login = ({history}) => {
                 token: user.getIdTokenResult().token
             }
         })
+        user.getIdTokenResult()
+            .then(token=>createOrUpdateUser(token.token))
         history.push('/')
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        auth.signInWithEmailAndPassword(email, password)
-            .then(({user})=>{
-                loginHandler(user)
-                return user.getIdTokenResult()
-            })
-            .then(token=>createOrUpdateUser(token.token))
+        auth.signInWithEmailAndPassword(email.trim(), password)
+            .then(({user})=>loginHandler(user))
             .catch(err=>{
                 toast.error(`Error: ${err.message}`)
                 setLoading(false)

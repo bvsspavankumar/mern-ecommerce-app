@@ -4,3 +4,4 @@ client/.eslintcache
 server/node_modules
 server/.env
 server/config/
+temp.txt
