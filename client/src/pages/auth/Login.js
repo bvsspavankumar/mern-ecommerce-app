@@ -5,16 +5,8 @@ import {Button} from 'antd'
 import {GoogleOutlined, MailOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
-import axios from 'axios'
 
-const createOrUpdateUser = async (authtoken) => {
-    console.log('in couu')
-    return await axios.post(
-        process.env.REACT_APP_API+'/create-or-update-user/',
-        {},
-        {headers:{authtoken}}
-    )
-}
+import {createOrUpdateUser} from '../../functions/auth'
 
 const Login = ({history}) => {
 
@@ -30,15 +22,22 @@ const Login = ({history}) => {
 
     const loginHandler = (user) => {
         toast.success(`Login successful`)
-        dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-                email: user.email,
-                token: user.getIdTokenResult().token
-            }
-        })
         user.getIdTokenResult()
             .then(token=>createOrUpdateUser(token.token))
+            .then(async res=>{
+                const token = await user.getIdTokenResult()
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: {
+                        name: res.data.name,
+                        email: res.data.email,
+                        token: token.token,
+                        role: res.data.role,
+                        _id: res.data._id,
+                    }
+                })
+            })
+            
         history.push('/')
     }
 

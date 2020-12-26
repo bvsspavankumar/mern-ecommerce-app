@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import {auth} from '../../firebase'
 import {toast} from 'react-toastify'
+import {useDispatch, useSelector} from 'react-redux'
+
+import {createOrUpdateUser} from '../../functions/auth'
 
 const RegisterComplete = ({history}) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
+    const {user} = useSelector(state=>({...state}))
 
     useEffect(() => {
         setEmail(window.localStorage.getItem('emailForRegistration'))
@@ -27,7 +32,20 @@ const RegisterComplete = ({history}) => {
                     window.localStorage.removeItem('emailForRegistration')
                     let user = auth.currentUser
                     await user.updatePassword(password)
-                    await user.getIdTokenResult()
+                    const token = await user.getIdTokenResult()
+                    createOrUpdateUser(token.token)
+                    .then(res=>{
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: token.token,
+                                role: res.data.role,
+                                _id: res.data._id,
+                            }
+                        })
+                    })
                     history.push('/')
                     toast.success('Registration successful')
                 } else {
