@@ -33,6 +33,9 @@ const Header = () => {
             <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
                 <Item key="sub1">Login</Item>
                 <Item key="sub2">Register</Item>
+                <Item key='logout' icon={<UserOutlined />}>
+                    <Link to='/logout'>Logout</Link>
+                </Item>
             </SubMenu>
         </Menu>
     );
