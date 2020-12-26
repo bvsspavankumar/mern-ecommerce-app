@@ -5,6 +5,9 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const process = require('process')
+const fs = require('fs')
+
+const authRoutes = require('./routes/auth')
 
 const app = express()
 
@@ -22,6 +25,9 @@ app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(cors())
 
+app.use('/api', authRoutes)
+fs.readdirSync('./routes')
+    .map(r=>app.use('/api', require('./routes/'+r)))
 app.get('/', (req, res)=>{
     res.json({data: 'success'})
 })
