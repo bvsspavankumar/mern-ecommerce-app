@@ -10,7 +10,9 @@ import ForgotPassword from './pages/auth/ForgotPassword'
 import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
+import History from './pages/user/History'
 import Header from './components/nav/Header'
+import UserRoute from './components/routes/UserRoute'
 import {currentUser} from './functions/auth'
 
 import {auth} from './firebase'
@@ -50,6 +52,7 @@ const App = () => {
       <Route path="/forgot/password" component={ForgotPassword} />
       <Route path="/register/complete" component={RegisterComplete} />
       <Route path="/register" component={Register} />
+      <UserRoute path="/user/history" component={History} />
       <Route path="/" component={Home} />
     </Switch>
     </>
