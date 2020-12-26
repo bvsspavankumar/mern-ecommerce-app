@@ -16,3 +16,8 @@ exports.createOrUpdateUser = async (req, res)=>{
         res.json(newUser)
     }
 }
+
+exports.currentUser = async (req, res)=>{
+    User.findOne({email: req.user.email})
+        .then(user=>res.json(user))
+}
