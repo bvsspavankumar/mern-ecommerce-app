@@ -4,13 +4,13 @@ import {useSelector} from 'react-redux'
 
 import {updateCategory, getCategory} from '../../../functions/category'
 import AdminNav from '../../../components/nav/AdminNav'
+import CategoryForm from '../../../components/forms/CategoryForm'
 
 const CategoryUpdate = ({history, match}) => {
     const {user} = useSelector(state=>({...state}))
 
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false)
-    // const [category, setCategory] = useState([])
 
     useEffect(() => {
         loadCategory()
@@ -38,36 +38,6 @@ const CategoryUpdate = ({history, match}) => {
             })
     }
 
-    // const handleRemove = (slug) => {
-    //     if(window.confirm("Delete?")) {
-    //         setLoading(true)
-    //         removeCategory(slug, user.token)
-    //         .then(res=>{
-    //             setLoading(false)
-    //             toast.info(`Removed ${slug}`)
-    //             loadCategories()
-    //         })
-    //     }
-
-    // }
-    const categoryForm = (
-        <form onSubmit={handleSubmit}>
-            <div className="form-group">
-                <label>Name</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    onChange={(e)=>setName(e.target.value)}
-                    value={name}
-                    autoFocus
-                    required
-                />
-                <br />
-                <button className="btn btn-outline-primary">Save</button>
-            </div>
-        </form>
-    )
-
     return (
         <div className="container-fluid">
             <div className="col md-2">
@@ -75,7 +45,11 @@ const CategoryUpdate = ({history, match}) => {
             </div>
             <div className="col">
                 {loading?<h4>Loading...</h4>:<h4>Update Category</h4>}
-                {categoryForm}
+                <CategoryForm 
+                    handleSubmit={handleSubmit}
+                    name={name}
+                    setName={setName}
+                />
                 <hr />
             </div>
         </div>
