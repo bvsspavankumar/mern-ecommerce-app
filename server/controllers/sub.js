@@ -4,8 +4,8 @@ const Sub = require('../models/sub')
 
 
 exports.create = (req, res) => {
-    const {name} = req.body
-    new Sub({name, slug: slugify(name)})
+    const {name, parent} = req.body
+    new Sub({name, parent, slug: slugify(name)})
         .save()
         .then(sub=>res.json(sub))
         .catch(err=>res.status(400).send("Creation failed"))
@@ -24,10 +24,10 @@ exports.list = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    const {name} = req.body
+    const {name, parent} = req.body
     Sub.findOneAndUpdate(
         {slug: req.params.slug}, 
-        {name, slug: slugify(name)},
+        {name, parent, slug: slugify(name)},
         {new: true})
         .then(sub=>res.json(sub))
         .catch(err=>res.status(400).send("Update failed"))
