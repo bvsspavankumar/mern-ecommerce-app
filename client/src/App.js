@@ -11,6 +11,8 @@ import Register from './pages/auth/Register'
 import RegisterComplete from './pages/auth/RegisterComplete'
 import Home from './pages/Home'
 import History from './pages/user/History'
+import Password from './pages/user/Password'
+import Wishlist from './pages/user/Wishlist'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
 import {currentUser} from './functions/auth'
@@ -53,6 +55,8 @@ const App = () => {
       <Route path="/register/complete" component={RegisterComplete} />
       <Route path="/register" component={Register} />
       <UserRoute path="/user/history" component={History} />
+      <UserRoute path="/user/password" component={Password} />
+      <UserRoute path="/user/wishlist" component={Wishlist} />
       <Route path="/" component={Home} />
     </Switch>
     </>
