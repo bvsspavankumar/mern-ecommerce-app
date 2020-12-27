@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AdminNav from '../../components/nav/AdminNav'
+import AdminNav from '../../../components/nav/AdminNav'
 
 const AdminDashboard = () => {
 
@@ -10,7 +10,7 @@ const AdminDashboard = () => {
                 <AdminNav />
             </div>
             <div className="col">
-            AdminDashboard
+            Create category
             </div>
         </div>
     )

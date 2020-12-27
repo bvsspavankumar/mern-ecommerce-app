@@ -14,6 +14,7 @@ import History from './pages/user/History'
 import Password from './pages/user/Password'
 import Wishlist from './pages/user/Wishlist'
 import AdminDashboard from './pages/admin/AdminDashboard'
+import CategoryCreate from './pages/admin/category/CategoryCreate'
 import Header from './components/nav/Header'
 import UserRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
@@ -60,6 +61,7 @@ const App = () => {
       <UserRoute path="/user/password" component={Password} />
       <UserRoute path="/user/wishlist" component={Wishlist} />
       <AdminRoute path="/admin/dashboard" component={AdminDashboard} />
+      <AdminRoute path="/admin/category" component={CategoryCreate} />
       <Route path="/" component={Home} />
     </Switch>
     </>
