@@ -7,12 +7,14 @@ import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
 import {createCategory, getCategories, removeCategory} from '../../../functions/category'
 import AdminNav from '../../../components/nav/AdminNav'
 import CategoryForm from '../../../components/forms/CategoryForm'
+import LocalSearch from '../../../components/forms/LocalSearch'
 
 const CategoryCreate = () => {
     const {user} = useSelector(state=>({...state}))
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([])
+    const [keyword, setKeyword] = useState('')
 
     useEffect(() => {
         loadCategories()
@@ -50,8 +52,8 @@ const CategoryCreate = () => {
         }
 
     }
-
-    const renderCategories = () => categories.map((c)=>(
+    const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword)
+    const renderCategories = () => categories.filter(searched(keyword)).map((c)=>(
         <div className='alert alert-secondary' key={c._id}>
             {c.name} 
             <span 
@@ -81,6 +83,7 @@ const CategoryCreate = () => {
                     setName={setName}
                 />
                 <hr />
+                <LocalSearch keyword={keyword} setKeyword={setKeyword} />
                 {renderCategories()}
             </div>
         </div>
