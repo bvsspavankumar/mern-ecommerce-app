@@ -1,4 +1,5 @@
 const admin = require('../firebase')
+const User=  require('../models/user')
 
 exports.authCheck = (req, res, next) => {
     console.log(req.headers)
@@ -15,5 +16,19 @@ exports.authCheck = (req, res, next) => {
                 err: err.message,
                 msg: "Invalid or expired token"
             })
+        })
+}
+
+exports.adminCheck = (req, res, next) => {
+    const {email} = req.user
+    User.findOne({email}).exec()
+        .then(user=>{
+            if (user.role!=='admin') {
+                res.status(403).json({
+                    err: "Admin resource. Access denied."
+                })
+            } else {
+                next()
+            }
         })
 }
